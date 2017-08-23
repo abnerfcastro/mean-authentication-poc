@@ -1,0 +1,11 @@
+.navbar.navbar-default
+    .container
+        #navbar-main
+            ul.nav.navbar-nav
+                li
+                    a(href='/') Home
+            ul.nav.navbar-nav.navbar-right
+                li(ng-hide='vm.isLoggedIn')
+                    a(href='login') Sign in
+                li(ng-show='vm.isLoggedIn')
+                    a(href='profile') {{ vm.currentUser.name }}

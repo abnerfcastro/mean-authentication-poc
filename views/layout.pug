@@ -1,0 +1,39 @@
+//-
+//- views/layout.jade
+//-
+//- Creates the layout for the application pages
+//- Author: Abner Castro
+//- Date: August 22nd, 2017
+//-
+
+doctype
+html(lang="en-us", ng-app="auth.app")
+    head
+        meta(charset="utf-8")
+        base(href='/')
+        title= title
+
+        //- Bootstrap StyleSheet
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous")
+
+        //- Font Awesome
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+
+    body
+        navigation
+        block content
+
+        //-- CDN jQuery 3.2.1 file --
+        script(src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous")
+
+        //-- CDN Bootstrap 3.3.7 JS files --
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous")
+
+        //-- CDN Angular JS 1.6.4 files --
+        script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js")
+        script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js")
+
+        script(src="main.js")
+        script(src="/controllers/register.controller.js")
+        script(src="/controllers/login.controller.js")
+        script(src="/directives/navigation.directive.js")

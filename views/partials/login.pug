@@ -1,0 +1,17 @@
+
+.container
+    .row
+        .col-md-6
+            h1.form-signin-heading Sign in
+            p.lead
+                | Not a member? Please 
+                a(href='register') register
+                |  instead.
+            form(ng-submit='vm.submit()')
+                .form-group
+                    label(for='email') Email address
+                    input#email.form-control(type='email', placeholder='Enter email', ng-model='vm.credentials.email')
+                .form-group
+                    label(for='password') Password
+                    input#password.form-control(type='password', placeholder='Password', ng-model='vm.credentials.password')
+                button.btn.btn-default(type='submit') Sign in!

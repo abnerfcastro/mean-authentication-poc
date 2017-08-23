@@ -1,0 +1,31 @@
+{
+  "name": "mean-authentication-poc",
+  "version": "1.0.0",
+  "description": "Learning how authentication works for MEAN Stack using JWT.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mongo",
+    "express",
+    "node",
+    "angular",
+    "passport",
+    "auth",
+    "jwt"
+  ],
+  "author": "Abner Castro",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.4",
+    "jsonwebtoken": "^7.4.3",
+    "mongoose": "^4.11.7",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.0-rc.3"
+  }
+}
