@@ -11,7 +11,7 @@
         // Usage:
         //  <navigation></navigation>
         // Creates:
-        //
+        //  navigation bar
         var directive = {
             controller: NavigationController,
             controllerAs: 'vm',

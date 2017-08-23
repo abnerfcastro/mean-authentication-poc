@@ -7,24 +7,24 @@
  */
 
 (function () {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('auth.app')
-		.controller('LoginController', LoginController);
+    angular
+        .module('auth.app')
+        .controller('LoginController', LoginController);
 
-	LoginController.$inject = ['$log'];
+    LoginController.$inject = ['$log'];
 
-	function LoginController($log) {
-		var vm = this;
+    function LoginController($log) {
+        var vm = this;
 
-		vm.credentials = {
-			email: "",
-			password: ""
-		};
+        vm.credentials = {
+            email: "",
+            password: ""
+        };
 
-		vm.submit = function () {
+        vm.submit = function () {
 
-		}
-	}
+        }
+    }
 })();
