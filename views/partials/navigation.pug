@@ -5,7 +5,7 @@
                 li
                     a(href='/') Home
             ul.nav.navbar-nav.navbar-right
-                li(ng-hide='vm.isLoggedIn')
+                li(ng-hide='vm.isAuthenticated')
                     a(href='login') Sign in
-                li(ng-show='vm.isLoggedIn')
+                li(ng-show='vm.isAuthenticated')
                     a(href='profile') {{ vm.currentUser.name }}

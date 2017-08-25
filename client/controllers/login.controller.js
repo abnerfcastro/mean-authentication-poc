@@ -7,24 +7,32 @@
  */
 
 (function () {
-    'use strict';
+	'use strict';
 
-    angular
-        .module('auth.app')
-        .controller('LoginController', LoginController);
+	angular
+		.module('auth.app')
+		.controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$log'];
+	LoginController.$inject = ['$log', '$location', 'Authentication'];
 
-    function LoginController($log) {
-        var vm = this;
+	function LoginController($log, $location, $authentication) {
+		var vm = this;
 
-        vm.credentials = {
-            email: "",
-            password: ""
-        };
+		vm.credentials = {
+			email: "",
+			password: ""
+		};
 
-        vm.submit = function () {
-
-        }
-    }
+		vm.submit = function () {
+			$authentication
+				.login(vm.credentials)
+				.then(() => {
+					// redirects to profile
+					$location.path('/profile');
+				})
+				.catch(err => {
+					console.log(err);
+				})
+		}
+	}
 })();

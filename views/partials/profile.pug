@@ -1,0 +1,12 @@
+.container
+    .row
+        .col-md-6
+            h1.form-signin-heading Your profile
+            form.form-horizontal
+                .form-group
+                    label.col-sm-3.control-label Full name
+                    p.form-control-static {{ vm.user.name }}
+                .form-group
+                    label.col-sm-3.control-label Email
+                    p.form-control-static {{ vm.user.email }}
+            button.btn.btn-default(ng-click="vm.logout()") Logout

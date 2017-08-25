@@ -6,14 +6,22 @@
  * Date: August 22nd, 2017
  */
 
-(function() {
+(function () {
     'use strict';
 
-    angular.module('auth.app', ['ngRoute']);
+    angular.module('auth.app', ['ngRoute', 'angular-jwt']);
 
     angular
         .module('auth.app')
-        .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+        .config(['$routeProvider', '$locationProvider', '$httpProvider', 'jwtOptionsProvider', function ($routeProvider, $locationProvider, $httpProvider, jwtOptionsProvider) {
+            jwtOptionsProvider.config({
+                tokenGetter: ['Authentication', function ($auth) {
+                    return $auth.getToken();
+                }]
+            });
+
+            $httpProvider.interceptors.push('jwtInterceptor');
+
             $routeProvider
                 .when('/', {
                     templateUrl: 'partials/index'
@@ -28,9 +36,26 @@
                     controller: 'LoginController',
                     controllerAs: 'vm'
                 })
-                .otherwise({ redirectTo: '/' });
+                .when('/profile', {
+                    templateUrl: 'partials/profile',
+                    controller: 'ProfileController',
+                    controllerAs: 'vm'
+                })
+                .otherwise({
+                    redirectTo: '/'
+                });
 
-                $locationProvider.html5Mode(true);
-        }]);
+            $locationProvider.html5Mode(true);
+        }])
+        .run(['$rootScope', '$location', '$log', 'Authentication', function ($rootScope, $location, $log, $auth) {
+            $rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
+                if ($location.path() === '/profile' && !$auth.isAuthenticated()) {
+                    $log.log(`You're not authorized to visit /profile. Please sign in.`);
+                    $location.path('/');
+                } else if ($location.path() === '/profile') {
+                    $log.log(`You are authorized to visit /profile.`);
+                }
+            });
+        }])
 
 })();
