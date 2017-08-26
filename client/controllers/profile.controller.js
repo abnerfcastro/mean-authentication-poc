@@ -22,7 +22,6 @@
 
         vm.logout = function () {
             Authentication.logout();
-            $location.path('/');
         }
 
         vm.isAdmin = function () {

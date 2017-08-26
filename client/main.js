@@ -10,21 +10,13 @@
     'use strict';
 
     angular.module('auth.app', ['ngRoute', 'angular-jwt']);
-    
+
     // Defines User roles and Authentication Events
     angular
         .module('auth.app')
         .constant('USER_ROLES', {
             admin: 'admin',
             standard: 'standard'
-        })
-        .constant('AUTH_EVENTS', {
-            loginSuccess: 'auth-login-success',
-            loginFailed: 'auth-login-failed',
-            logoutSuccess: 'auth-logout-success',
-            sessionTimeout: 'auth-session-timeout',
-            notAuthenticated: 'auth-not-authenticated',
-            notAuthorized: 'auth-not-authorized'
         });
 
     angular
@@ -73,8 +65,8 @@
 
                 $locationProvider.html5Mode(true);
         }])
-        .run(['$rootScope', '$location', '$log', 'Authentication', 'AUTH_EVENTS', function ($rootScope, $location, $log, $auth, AUTH_EVENTS) {
-            $rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
+        .run(['$rootScope', '$log', 'Authentication', 'AuthEventsEmitter', 'AUTH_EVENTS', function ($rootScope, $log, $auth, AuthEventsEmitter, AUTH_EVENTS) {
+            $rootScope.$on('$routeChangeStart', function (event, nextRoute) {
                 // if ($location.path() === '/profile' && !$auth.isAuthenticated()) {
                 //     $log.log(`You're not authorized to visit /profile. Please sign in.`);
                 //     $location.path('/');
@@ -89,11 +81,9 @@
                     if (!$auth.isAuthorized(authorizedRoles)) {
                         event.preventDefault();
                         if ($auth.isAuthenticated()) {
-                            $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-                            $location.path('/profile');
+                            AuthEventsEmitter.fireEvent(AUTH_EVENTS.notAuthorized);
                         } else {
-                            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-                            $location.path('/login');
+                            AuthEventsEmitter.fireEvent(AUTH_EVENTS.notAuthenticated);
                         }
                     }
                 }

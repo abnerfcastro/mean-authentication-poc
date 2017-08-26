@@ -33,7 +33,7 @@
                     $location.path('/profile');
                 })
                 .catch(err => {
-                    $rootScope.$broadcast(AUTH_EVENTS.loginFailed);                    
+                    $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                     console.log(err);
                 })
         }

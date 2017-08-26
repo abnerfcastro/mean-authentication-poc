@@ -13,9 +13,9 @@
         .module('auth.app')
         .factory('Authentication', Authentication);
 
-    Authentication.$inject = ['$http', '$window', '$q', '$rootScope', 'AUTH_EVENTS', 'USER_ROLES', '$log'];
+    Authentication.$inject = ['$http', '$window', '$q', 'AuthEventsEmitter', 'AUTH_EVENTS', 'USER_ROLES', '$log'];
 
-    function Authentication($http, $window, $q, $rootScope, AUTH_EVENTS, USER_ROLES, $log) {
+    function Authentication($http, $window, $q, AuthEventsEmitter, AUTH_EVENTS, USER_ROLES, $log) {
         var service = {
             login: login,
             register: register,
@@ -36,10 +36,12 @@
                     .then(response => {
                         $log.log('SAVING TOKEN', response.data.token);
                         __saveToken(response.data.token);
+                        AuthEventsEmitter.fireEvent(AUTH_EVENTS.loginSuccess);
                         resolve(getCurrentUser());
                     })
                     .catch(err => {
                         if (err) {
+                            AuthEventsEmitter.fireEvent(AUTH_EVENTS.loginFailed);
                             reject(err);
                         }
                     });
@@ -67,7 +69,7 @@
 
         function logout() {
             __deleteToken();
-            $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+            AuthEventsEmitter.fireEvent(AUTH_EVENTS.logoutSuccess);
         }
 
 
@@ -83,8 +85,7 @@
         function isAuthorized(authorizedRoles) {
             if (!authorizedRoles) {
                 authorizedRoles = [USER_ROLES.standard];
-            }
-            else if (!angular.isArray(authorizedRoles)) {
+            } else if (!angular.isArray(authorizedRoles)) {
                 authorizedRoles = [authorizedRoles];
             }
             return (isAuthenticated() && authorizedRoles.indexOf(__getUserRole()) !== -1);
