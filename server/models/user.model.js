@@ -16,8 +16,9 @@ var userSchema = new mongoose.Schema({
         unique: true,
         required: true,
         lowercase: true
-    },
-    name: String,
+	},	
+	name: String,
+	role: String,
     hash: String,
     salt: String
 });
@@ -37,9 +38,9 @@ userSchema.methods.generateJwt = function () {
     expiry.setDate(expiry.getDate() + 7);
 
     return jwt.sign({
-        _id: this._id,
         email: this.email,
-        name: this.name,
+		name: this.name,
+		role: this.role,
         exp: parseInt(expiry.getTime() / 1000),
     }, process.env.JWT_SECRET);
 };

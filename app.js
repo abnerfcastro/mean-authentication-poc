@@ -60,11 +60,14 @@ require('./server/config/passport.config');
 // [SH] Initialise Passport before using the route middleware
 app.use(passport.initialize());
 
-var routes = require('./server/routes/index');
-app.use('/api', routes);
+const index = require('./server/routes/index');
+app.use('/api', index);
 
-var protected = require('./server/routes/protected')
-app.use('/', protected);
+const profile = require('./server/routes/profile')
+app.use('/', profile);
+
+const dashboard = require('./server/routes/dashboard')
+app.use('/', dashboard);
 
 app.get('/partials/:name', (req, res) => {
 	res.render('partials/' + req.params.name);

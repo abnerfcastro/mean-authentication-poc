@@ -44,11 +44,8 @@ class Authentication {
     }
 
     login(req, res) {
-		console.log('about to call authenticate')
         passport.authenticate('local', (err, user, info) => {
-			console.log('err', err, 'user', user, 'info', info);
 			if (err) {
-				console.log('here')
                 res.status(500).json({
                     error: err
                 });
@@ -56,13 +53,11 @@ class Authentication {
             }
 
             if (user) {
-				console.log('here 2')
                 let token = user.generateJwt();
                 res.status(200).json({
                     token: token
                 });
             } else {
-				console.log('here 3')
                 res.status(401).json(info);
             }
         })(req, res);

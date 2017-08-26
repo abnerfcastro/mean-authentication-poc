@@ -41,6 +41,9 @@
                     controller: 'ProfileController',
                     controllerAs: 'vm'
                 })
+                .when('/dashboard', {
+                    templateUrl: 'partials/dashboard'
+                })
                 .otherwise({
                     redirectTo: '/'
                 });
@@ -51,6 +54,9 @@
             $rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
                 if ($location.path() === '/profile' && !$auth.isAuthenticated()) {
                     $log.log(`You're not authorized to visit /profile. Please sign in.`);
+                    $location.path('/');
+                } else if ($location.path() === '/dashboard' && (!$auth.isAuthenticated() || !$auth.isAdmin())) {
+                    $log.log(`You're not authorized to visit /dashboard. Please sign in as a admin user.`);
                     $location.path('/');
                 } else if ($location.path() === '/profile') {
                     $log.log(`You are authorized to visit /profile.`);

@@ -22,6 +22,7 @@
             logout: logout,
             isAuthenticated: isAuthenticated,
 			getCurrentUser: getCurrentUser,
+			isAdmin: isAdmin,
 			getToken: getJwtToken
         };
 
@@ -86,6 +87,11 @@
                     name: payload.name
                 }
             }
+		}
+
+		function isAdmin() {
+			var payload = __decodePayload();
+			return payload["role"] === "admin";
 		}
 		
 		function getJwtToken() {

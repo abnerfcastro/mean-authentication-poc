@@ -9,12 +9,6 @@
 'use strict'
 
 const express = require('express');
-const jwt = require('express-jwt');
-
-const auth = jwt({
-    secret: process.env.JWT_SECRET,
-    userProperty: 'payload'
-});
 
 var router = express.Router();
 
