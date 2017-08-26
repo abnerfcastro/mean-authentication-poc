@@ -21,9 +21,9 @@
             register: register,
             logout: logout,
             isAuthenticated: isAuthenticated,
-			getCurrentUser: getCurrentUser,
-			isAdmin: isAdmin,
-			getToken: getJwtToken
+            getCurrentUser: getCurrentUser,
+            isAdmin: isAdmin,
+            getToken: getJwtToken
         };
 
         return service;
@@ -33,7 +33,7 @@
                 $http
                     .post('/api/login', user)
                     .then(response => {
-                        $log.log('SAVING TOKEN', response.data.token);                        
+                        $log.log('SAVING TOKEN', response.data.token);
                         __saveToken(response.data.token);
                         resolve(true);
                     })
@@ -51,7 +51,7 @@
                 $http
                     .post('/api/register', user)
                     .then(response => {
-                        $log.log('SAVING TOKEN', response.data.token);                        
+                        $log.log('SAVING TOKEN', response.data.token);
                         __saveToken(response.data.token);
                         resolve(true);
                     })
@@ -87,16 +87,16 @@
                     name: payload.name
                 }
             }
-		}
+        }
 
-		function isAdmin() {
-			var payload = __decodePayload();
-			return payload["role"] === "admin";
-		}
-		
-		function getJwtToken() {
-			return __getToken();
-		}
+        function isAdmin() {
+            var payload = __decodePayload();
+            return payload["role"] === "admin";
+        }
+
+        function getJwtToken() {
+            return __getToken();
+        }
 
         // Internal functions
 
@@ -114,7 +114,7 @@
 
         function __decodePayload() {
             var token = __getToken();
-            $log.log('TOKEN', token);            
+            $log.log('TOKEN', token);
             if (token) {
                 var payload = token.split('.')[1];
                 $log.log('decoding 1', payload);
