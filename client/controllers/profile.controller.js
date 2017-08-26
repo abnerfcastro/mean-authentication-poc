@@ -7,29 +7,29 @@
  */
 
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('auth.app')
-		.controller('ProfileController', ProfileController);
+    angular
+        .module('auth.app')
+        .controller('ProfileController', ProfileController);
 
-	ProfileController.$inject = ['$location', 'Authentication'];
-	function ProfileController($location, Authentication) {
-		var vm = this;
+    ProfileController.$inject = ['$location', 'Authentication'];
+    function ProfileController($location, Authentication) {
+        var vm = this;
 
-		vm.user = {}
+        vm.user = {}
 
-		vm.logout = function () {
-			Authentication.logout();
-			$location.path('/');
-		}
+        vm.logout = function () {
+            Authentication.logout();
+            $location.path('/');
+        }
 
-		activate();
+        activate();
 
-		////////////////
+        ////////////////
 
-		function activate() {
-			vm.user = Authentication.getCurrentUser();
-		}
-	}
+        function activate() {
+            vm.user = Authentication.getCurrentUser();
+        }
+    }
 })();
