@@ -13,9 +13,9 @@
         .module('auth.app')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$log', '$location', 'Authentication'];
+    LoginController.$inject = ['$scope', '$rootScope', '$log', '$location', 'AUTH_EVENTS', 'Authentication'];
 
-    function LoginController($log, $location, $authentication) {
+    function LoginController($scope, $rootScope, $log, $location, AUTH_EVENTS, $auth) {
         var vm = this;
 
         vm.credentials = {
@@ -24,13 +24,16 @@
         };
 
         vm.submit = function () {
-            $authentication
+            $log.log('here');
+            $auth
                 .login(vm.credentials)
-                .then(() => {
-                    // redirects to profile
+                .then((user) => {
+                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    $scope.setCurrentUser(user);
                     $location.path('/profile');
                 })
                 .catch(err => {
+                    $rootScope.$broadcast(AUTH_EVENTS.loginFailed);                    
                     console.log(err);
                 })
         }

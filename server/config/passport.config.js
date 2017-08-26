@@ -1,6 +1,6 @@
 /*!
  * ./server/controller/auth.controller.js
- * 
+ *
  * Backend Authentication controller
  * Author: Abner Castro
  * Date: August 22nd, 2017
@@ -20,15 +20,15 @@ passport.use(new LocalStrategy({
         .then(user => {
             // user not found
             if (!user) {
-				console.log('IN PASSPORT', 'incorrect username');
+                console.log('IN PASSPORT', 'incorrect username');
                 return done(null, null, {
                     message: 'Incorrect username.'
                 });
             }
             // user was found, but password is incorrect
             if (!user.validPassword(password)) {
-				console.log('IN PASSPORT', 'incorrect password');				
-				return done(null, null, {
+                console.log('IN PASSPORT', 'incorrect password');
+                return done(null, null, {
                     message: 'Incorrect password.'
                 });
             }
@@ -36,7 +36,7 @@ passport.use(new LocalStrategy({
             return done(null, user);
         })
         .catch(err => {
-			console.log('Database error', err.message);
+            console.log('Database error', err.message);
             return done(err);
         });
 }));

@@ -19,8 +19,8 @@ const CheckJwtMiddleware = jwt({
 var router = express.Router();
 
 router.get('/partials/profile', CheckJwtMiddleware, (req, res) => {
-	console.log('Protected route');
-	res.render('partials/profile');	
+    console.log('Protected route');
+    res.render('partials/profile');
 })
 
 module.exports = router;

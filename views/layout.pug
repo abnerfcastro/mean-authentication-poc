@@ -19,7 +19,7 @@ html(lang="en-us", ng-app="auth.app")
         //- Font Awesome
         link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
 
-    body
+    body(ng-controller="ApplicationController")
         navigation
         block content
 
@@ -36,8 +36,9 @@ html(lang="en-us", ng-app="auth.app")
         script(src="/lib/angular-jwt/angular-jwt.min.js")
 
         script(src="main.js")
-        script(src="/services/auth.service.js")
+        script(src="/services/authentication.service.js")
         script(src="/controllers/register.controller.js")
         script(src="/controllers/login.controller.js")
         script(src="/controllers/profile.controller.js")
+        script(src="/controllers/application.controller.js")
         script(src="/directives/navigation.directive.js")

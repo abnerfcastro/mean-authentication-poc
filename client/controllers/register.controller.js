@@ -7,32 +7,32 @@
  */
 
 (function () {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('auth.app')
-		.controller('RegisterController', RegisterController);
+    angular
+        .module('auth.app')
+        .controller('ApplicationController', RegisterController);
 
-	RegisterController.$inject = ['$log', 'Authentication'];
+    RegisterController.$inject = ['$log', 'Authentication'];
 
-	function RegisterController($log, $authentication) {
-		var vm = this;
+    function RegisterController($log, $authentication) {
+        var vm = this;
 
-		vm.credentials = {
-			name: "",
-			email: "",
-			password: ""
-		};
+        vm.credentials = {
+            name: "",
+            email: "",
+            password: ""
+        };
 
-		vm.submit = function () {
-			$authentication
-				.register(vm.credentials)
-				.then(() => {
-					// redirects to profile
-				})
-				.catch(err => {
-					alert(err);
-				});
-		}
-	}
+        vm.submit = function () {
+            $authentication
+                .register(vm.credentials)
+                .then(() => {
+                    // redirects to profile
+                })
+                .catch(err => {
+                    alert(err);
+                });
+        }
+    }
 })();

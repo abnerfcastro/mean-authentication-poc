@@ -14,6 +14,7 @@
         .controller('ProfileController', ProfileController);
 
     ProfileController.$inject = ['$location', 'Authentication'];
+
     function ProfileController($location, Authentication) {
         var vm = this;
 
@@ -22,6 +23,10 @@
         vm.logout = function () {
             Authentication.logout();
             $location.path('/');
+        }
+
+        vm.isAdmin = function () {
+            return Authentication.isAdmin();
         }
 
         activate();

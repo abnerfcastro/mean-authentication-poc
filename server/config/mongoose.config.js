@@ -1,6 +1,6 @@
 /*!
  * ./server/config/mongoose.config.js
- * 
+ *
  * Sets up the database connection and shutdown
  * Author: Abner Castro
  * Date: August 22nd, 2017

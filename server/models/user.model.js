@@ -16,9 +16,9 @@ var userSchema = new mongoose.Schema({
         unique: true,
         required: true,
         lowercase: true
-	},	
-	name: String,
-	role: String,
+    },
+    name: String,
+    role: String,
     hash: String,
     salt: String
 });
@@ -39,8 +39,8 @@ userSchema.methods.generateJwt = function () {
 
     return jwt.sign({
         email: this.email,
-		name: this.name,
-		role: this.role,
+        name: this.name,
+        role: this.role,
         exp: parseInt(expiry.getTime() / 1000),
     }, process.env.JWT_SECRET);
 };

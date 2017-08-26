@@ -9,4 +9,8 @@
                 .form-group
                     label.col-sm-3.control-label Email
                     p.form-control-static {{ vm.user.email }}
+    .row
+        .col-md-1
             button.btn.btn-default(ng-click="vm.logout()") Logout
+        .col-md-2
+            a.btn.btn-primary(ng-if="vm.isAdmin()" href="dashboard") Go to Dashboard

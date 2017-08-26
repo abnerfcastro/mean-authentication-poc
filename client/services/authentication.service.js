@@ -13,14 +13,15 @@
         .module('auth.app')
         .factory('Authentication', Authentication);
 
-    Authentication.$inject = ['$http', '$window', '$q', '$log'];
+    Authentication.$inject = ['$http', '$window', '$q', '$rootScope', 'AUTH_EVENTS', 'USER_ROLES', '$log'];
 
-    function Authentication($http, $window, $q, $log) {
+    function Authentication($http, $window, $q, $rootScope, AUTH_EVENTS, USER_ROLES, $log) {
         var service = {
             login: login,
             register: register,
             logout: logout,
             isAuthenticated: isAuthenticated,
+            isAuthorized: isAuthorized,
             getCurrentUser: getCurrentUser,
             isAdmin: isAdmin,
             getToken: getJwtToken
@@ -35,7 +36,7 @@
                     .then(response => {
                         $log.log('SAVING TOKEN', response.data.token);
                         __saveToken(response.data.token);
-                        resolve(true);
+                        resolve(getCurrentUser());
                     })
                     .catch(err => {
                         if (err) {
@@ -66,6 +67,7 @@
 
         function logout() {
             __deleteToken();
+            $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
         }
 
 
@@ -76,6 +78,16 @@
             } else {
                 return false;
             }
+        }
+
+        function isAuthorized(authorizedRoles) {
+            if (!authorizedRoles) {
+                authorizedRoles = [USER_ROLES.standard];
+            }
+            else if (!angular.isArray(authorizedRoles)) {
+                authorizedRoles = [authorizedRoles];
+            }
+            return (isAuthenticated() && authorizedRoles.indexOf(__getUserRole()) !== -1);
         }
 
         function getCurrentUser() {
@@ -90,8 +102,8 @@
         }
 
         function isAdmin() {
-            var payload = __decodePayload();
-            return payload["role"] === "admin";
+            let role = __getUserRole();
+            return role === USER_ROLES.admin;
         }
 
         function getJwtToken() {
@@ -117,12 +129,16 @@
             $log.log('TOKEN', token);
             if (token) {
                 var payload = token.split('.')[1];
-                $log.log('decoding 1', payload);
                 payload = $window.atob(payload);
-                $log.log('decoding 2', payload);
                 payload = JSON.parse(payload);
-                $log.log('decoding 3', payload);
                 return payload;
+            }
+        }
+
+        function __getUserRole() {
+            if (isAuthenticated()) {
+                let payload = __decodePayload();
+                return (payload["role"]) ? payload["role"] : USER_ROLES.standard;
             }
         }
     }

@@ -7,7 +7,8 @@
         .directive('navigation', navigation);
 
     navigation.$inject = ['$log', 'Authentication'];
-    function navigation($log, $authentication) {
+
+    function navigation($log, $auth) {
         // Usage:
         //  <navigation></navigation>
         // Creates:
@@ -20,17 +21,28 @@
         };
         return directive;        
     }
-	/* @ngInject */
-	var NavigationController = ['Authentication', function($authentication) {
-		var vm = this;
-	
-		vm.isAuthenticated = $authentication.isAuthenticated();
-	
-		vm.currentUser = $authentication.getCurrentUser();
-		
-		vm.logout = function () {
-			$authentication.logout();
-		}
-	}]
-	
+
+    /* @ngInject */
+    var NavigationController = ['$scope', 'AUTH_EVENTS', 'Authentication', function($scope, AUTH_EVENTS, $auth) {
+        var vm = this;
+    
+        vm.isAuthenticated = $auth.isAuthenticated();
+    
+        vm.currentUser = $auth.getCurrentUser();
+
+        $scope.$on(AUTH_EVENTS.loginSuccess, function () {
+            vm.isAuthenticated = $auth.isAuthenticated();    
+            vm.currentUser = $auth.getCurrentUser();
+        });
+
+        $scope.$on(AUTH_EVENTS.logoutSuccess, function () {
+            vm.isAuthenticated = $auth.isAuthenticated();    
+            vm.currentUser = null;
+        });
+        
+        vm.logout = function () {
+            $auth.logout();
+        }
+    }]
+    
 })();
